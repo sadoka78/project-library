@@ -1,7 +1,4 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import User
 
 class Category(models.Model):
@@ -27,7 +24,7 @@ class UserLibraryItem(models.Model):
         ('completed', 'Завершено'),
         ('abandoned', 'Брошено'),
     ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)  # ← Было user, стало owner
     media_item = models.ForeignKey(MediaItem, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='planned')
     personal_rating = models.PositiveIntegerField(null=True, blank=True)
@@ -35,16 +32,16 @@ class UserLibraryItem(models.Model):
     finished_at = models.DateField(null=True, blank=True)
 
     class Meta:
-        unique_together = ('user', 'media_item')
+        unique_together = ('owner', 'media_item')
 
     def __str__(self):
-        return f"{self.user.username} – {self.media_item.title}"
+        return f"{self.owner.username} – {self.media_item.title}"
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     media_item = models.ForeignKey(MediaItem, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.media_item.title}"
+        return f"{self.owner.username} - {self.media_item.title}"

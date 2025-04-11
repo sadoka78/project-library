@@ -1,0 +1,20 @@
+{% extends 'library/base.html' %}
+{% block title %}Моя библиотека{% endblock %}
+
+{% block content %}
+<h2>Моя библиотека</h2>
+
+{% if items %}
+    {% for item in items %}
+        <div class="media-card">
+            <h3>{{ item.media_item.title }}</h3>
+            <p><strong>Статус:</strong> {{ item.get_status_display }}</p>
+            {% if item.personal_rating %}
+                <p><strong>Рейтинг:</strong> {{ item.personal_rating }}/10</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Вы ещё ничего не добавили в свою библиотеку.</p>
+{% endif %}
+{% endblock %}

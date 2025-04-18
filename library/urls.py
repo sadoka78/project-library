@@ -23,6 +23,9 @@ urlpatterns = [
     path('add-category/', views.create_category, name='create_category'),
     path('my-library/edit/<int:pk>/', views.edit_library_item, name='edit_library_item'),
     path('my-library/delete/<int:pk>/', views.delete_library_item, name='delete_library_item'),
+    path('add-to-library/<int:media_id>/', views.add_existing_media_to_library, name='add_to_library'),
+    path('media/<int:media_id>/reviews/', views.media_reviews, name='media_reviews'),
+
 
 
 

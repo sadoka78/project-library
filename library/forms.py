@@ -29,3 +29,11 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['name']
         labels = {'name': 'Название категории'}
+from .models import Review
+from django import forms
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['text']
+        labels = {'text': 'Ваш отзыв'}

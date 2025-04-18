@@ -9,20 +9,43 @@
 
     {% if user.is_authenticated %}
         <p class="lead">
-            Здесь вы можете вести учёт своих любимых фильмов, сериалов, книг, комиксов и тд.<br>
+            Здесь вы можете вести учёт своих любимых фильмов, сериалов, книг, комиксов и т.д.<br>
             Перейдите в <strong>"Мою библиотеку"</strong>, чтобы начать <br>
-
         </p>
 
         <div class="d-flex justify-content-center gap-3 mt-4">
-            <a href="{% url 'my_library' %}" class="btn btn-primary btn-lg"> Моя библиотека</a>
-
+            <a href="{% url 'my_library' %}" class="btn btn-primary btn-lg">📚 Моя библиотека</a>
         </div>
     {% else %}
         <p class="lead">
             Пожалуйста, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>, чтобы начать пользоваться личной медиатекой!
         </p>
     {% endif %}
+</div>
+
+<!-- ⬇⬇⬇ Переносим блок медиа внутрь content -->
+<h3 class="mt-5 mb-3">🎞 Доступные фильмы и книги</h3>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for item in media %}
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        {% if item.image %}
+          <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.category.name }}</p>
+          {% if user.is_authenticated %}
+            <a href="{% url 'add_to_library' item.id %}" class="btn btn-outline-success btn-sm"> Добавить</a>
+            <a href="{% url 'media_reviews' item.id %}" class="btn btn-outline-info btn-sm ms-2">💬 Отзывы</a>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>Пока ничего не добавлено.</p>
+  {% endfor %}
 </div>
 
 {% endblock %}

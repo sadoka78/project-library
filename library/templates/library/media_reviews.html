@@ -1,0 +1,27 @@
+{% extends 'library/base.html' %}
+{% block title %}Отзывы о {{ media_item.title }}{% endblock %}
+{% block content %}
+
+<h2>Отзывы о: "{{ media_item.title }}"</h2>
+
+<div class="mb-4">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success">Оставить отзыв</button>
+    </form>
+</div>
+
+<h4>Все отзывы:</h4>
+{% for review in reviews %}
+    <div class="border rounded p-3 mb-3">
+        <strong>{{ review.owner.username }}</strong> <span class="text-muted">({{ review.created_at|date:"d.m.Y H:i" }})</span>
+        <p>{{ review.text }}</p>
+    </div>
+{% empty %}
+    <p>Отзывов пока нет. Будь первым!</p>
+{% endfor %}
+
+<a href="{% url 'index' %}" class="btn btn-secondary mt-3">← Назад</a>
+
+{% endblock %}

@@ -1,3 +1,28 @@
 {% extends "library/base.html" %}
 
 {% block title %}Главная{% endblock %}
+
+{% block content %}
+
+<div class="text-center my-5">
+    <h1 class="mb-4">Добро пожаловать в Личную Медиатеку!</h1>
+
+    {% if user.is_authenticated %}
+        <p class="lead">
+            Здесь вы можете вести учёт своих любимых фильмов, сериалов, книг, комиксов и тд.<br>
+            Перейдите в <strong>"Мою библиотеку"</strong>, чтобы начать <br>
+
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="{% url 'my_library' %}" class="btn btn-primary btn-lg"> Моя библиотека</a>
+
+        </div>
+    {% else %}
+        <p class="lead">
+            Пожалуйста, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>, чтобы начать пользоваться личной медиатекой!
+        </p>
+    {% endif %}
+</div>
+
+{% endblock %}

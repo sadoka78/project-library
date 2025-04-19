@@ -9,6 +9,12 @@ from django.contrib.auth.decorators import login_required
 
 from .models import MediaItem, UserLibraryItem
 from .forms import RegisterForm
+from django.core.paginator import Paginator
+
+DEFAULT_SIZE = 3
+DEFAULT_PAGE = 1
+DEFAULT_ORDER_BY = 'name'
+sizes = [3, 6, 9]
 
 
 def index(request):
@@ -52,12 +58,25 @@ def logout_view(request):
     return redirect('index')
 
 
+@login_required
 def my_library(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
     items = UserLibraryItem.objects.filter(owner=request.user)
-    return render(request, 'library/my_library.html', {'items': items})
+
+    page = request.GET.get('page', DEFAULT_PAGE)
+    size = request.GET.get('size', DEFAULT_SIZE)
+
+    paginator = Paginator(items, size)
+    page_obj = paginator.get_page(page)
+    return render(request, 'library/my_library.html', {
+        'items': page_obj,
+        'paginator': paginator,
+        'sizes': sizes,
+    })
+
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import MediaItemForm, UserLibraryItemForm

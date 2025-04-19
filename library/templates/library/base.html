@@ -17,6 +17,9 @@
             {% if user.is_authenticated %}
                 <span class="me-2">👋 {{ user.username }}</span>
                 <a href="{% url 'my_library' %}" class="btn btn-outline-primary btn-sm">Моя библиотека</a>
+                <a href="{% url 'index' %}" class="btn btn-outline-primary btn-sm">Общая библиотека</a>
+
+
                 <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Выход</a>
             {% else %}
                 <a href="{% url 'login' %}" class="btn btn-primary btn-sm me-2">Войти</a>
@@ -28,6 +31,7 @@
     {% block content %}{% endblock %}
 
 </div>
+
 
 <!-- Bootstrap JS (если понадобится) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

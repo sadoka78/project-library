@@ -1,0 +1,12 @@
+{% extends 'library/base.html' %}
+{% block title %}Редактировать запись{% endblock %}
+{% block content %}
+<h2>Редактировать «{{ item.media_item.title }}»</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'my_library' %}" class="btn btn-secondary ms-2">Отмена</a>
+</form>
+{% endblock %}

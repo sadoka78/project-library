@@ -1,0 +1,11 @@
+{% extends 'library/base.html' %}
+{% block title %}Удалить запись{% endblock %}
+{% block content %}
+<h2>Удалить «{{ item.media_item.title }}» из библиотеки?</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a href="{% url 'my_library' %}" class="btn btn-secondary ms-2">Отмена</a>
+</form>
+{% endblock %}

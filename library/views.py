@@ -115,7 +115,7 @@ def create_category(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('add_new_media_to_library')  # Назад к добавлению медиа
+            return redirect('add_new_media_to_library')
     else:
         form = CategoryForm()
 
@@ -154,8 +154,6 @@ def delete_library_item(request, pk):
 @login_required
 def add_existing_media_to_library(request, media_id):
     media_item = get_object_or_404(MediaItem, pk=media_id)
-
-    # Не даём добавить повторно
     exists = UserLibraryItem.objects.filter(owner=request.user, media_item=media_item).exists()
     if not exists:
         UserLibraryItem.objects.create(

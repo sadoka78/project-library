@@ -24,7 +24,7 @@ class UserLibraryItem(models.Model):
         ('completed', 'Завершено'),
         ('abandoned', 'Брошено'),
     ]
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)  # ← Было user, стало owner
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     media_item = models.ForeignKey(MediaItem, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='planned')
     personal_rating = models.PositiveIntegerField(null=True, blank=True)
